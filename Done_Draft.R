@@ -264,41 +264,6 @@ Sample_Compilation <- function(universe) {
   return(week[2:5])
 }
 
-head(data)
-clustered_data <- separate_data(data, 90, 14)
-nrow(clustered_data)
-head(clustered_data)
-as.data.frame(table(clustered_data$cluster))
-clustered_data_split <- split(clustered_data, clustered_data$cluster)
-clustered_data_split
-rajouri_data <- lapply(clustered_data_split, FUN = Sample_Compilation)
-rajouri_data <- do.call(rbind, unlist(rajouri_data, recursive = FALSE))
-rajouri_data <- rajouri_data[order(rajouri_data$week),]
-write.csv(rajouri_data, "rajouri553015draft.csv")
-lapply(split(rajouri_data, rajouri_data$week), nrow)
-wr1 <- rajouri_data[rajouri_data$week %in% 1,]
-wr2 <- rajouri_data[rajouri_data$week %in% 2,]
-wr3 <- rajouri_data[rajouri_data$week %in% 3,]
-wr4 <- rajouri_data[rajouri_data$week %in% 4,]
-nrow(merge(wr4, wr3, by = "rest_id"))
-nrow(merge(wr2, wr4, by = "rest_id"))
-head(merge(wr1, wr2, by = "rest_id"))
-head(merge(wr2, wr3, by = "rest_id"))
-tail(merge(wr1, wr2, by = "rest_id"))
-tail(merge(wr2, wr3, by = "rest_id"))
-janakpuri_data <- lapply(clustered_data_split, FUN = Sample_Compilation)
-janakpuri_data <- do.call(rbind, unlist(janakpuri_data, recursive = FALSE))
-janakpuri_data <- janakpuri_data[order(janakpuri_data$week),]
-write.csv(janakpuri_data, "janakpuri702010draft.csv")
-lapply(split(janakpuri_data, janakpuri_data$week), nrow)
-w1 <- janakpuri_data[janakpuri_data$week %in% 1,]
-w2 <- janakpuri_data[janakpuri_data$week %in% 2,]
-w3 <- janakpuri_data[janakpuri_data$week %in% 3,]
-w4 <- janakpuri_data[janakpuri_data$week %in% 4,]
-nrow(merge(w2, w4, by = "rest_id"))
-head(merge(w2, w3, by = "rest_id"))
-tail(merge(w1, w2, by = "rest_id"))
-tail(merge(w2, w3, by = "rest_id"))
 falcalz <- list()
 zdtdd   <- list()
 merge1 <- read.csv("rhi_june.csv")
@@ -331,12 +296,8 @@ for(i in 1:nrow(tddata)) {
     tddata$cft[i] <- "> 2500"
   }
 }
-class(tddata$cft)
-head(tddata)
-nrow(tddata)
-nrow(tddata[complete.cases(tddata),])
 uacd <- unique(tddata$area_code)
-for(i in 27:length(uacd)){
+for(i in 1:length(uacd)){
   print(uacd[i])
   cdln       <- separate_data(tddata, uacd[i], 15)
   cdfdfln    <- as.data.frame(table(cdln$cluster))
@@ -375,21 +336,5 @@ for(i in 27:length(uacd)){
   zdtdd[[i]]   <- do.call(rbind, unlist(zdtdd[[i]], recursive = FALSE))
   zdtdd[[i]]   <- zdtdd[[i]][order(zdtdd[[i]]$week),]
 }
-lapply(falcalz, function(x) {as.data.frame(table(x$cluster))})
 
-smsfo <- split(falcalz[[16]], falcalz[[16]]$cluster)
-length(smsfo)
-for(i in 1:length(smsfo)) {
-  print(i)
-  print(Sample_Compilation(smsfo[[i]]))
-}
 write.csv(do.call(rbind, zdtdd), "s44ztd.csv")
-Sample_Compilation(smsfo[[1]])
-smsfo[[8]]
-write.csv(do.call(rbind, zdtdd), "s15ztd.csv")
-as.data.frame(table(falcalz[[16]]$cluster))
-falcalz[[16]][falcalz[[16]]$cluster %in% 1,]
-
-
-lapply(split(falcalz[[3]], falcalz[[3]]$cluster), FUN = Sample_Compilation)
-
